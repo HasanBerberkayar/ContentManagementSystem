@@ -1,0 +1,28 @@
+# Docker dosyaları
+*.log
+*.pid
+*.seed
+*.bak
+*.tar
+*.sql
+.env
+
+# IntelliJ IDEA veya diğer IDE klasörleri
+.idea/
+*.iml
+.vscode/
+
+# OS dosyaları
+.DS_Store
+Thumbs.db
+
+# Node & Java build dosyaları (yine de güvenli)
+node_modules/
+dist/
+build/
+
+# Genel temp ve cache dosyaları
+*.tmp
+*.temp
+*.swp
+*.swo
