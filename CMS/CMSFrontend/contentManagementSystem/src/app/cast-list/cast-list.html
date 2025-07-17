@@ -1,0 +1,72 @@
+<div class="container mx-auto p-6 font-sans bg-gradient-to-br from-slate-50 to-white min-h-screen rounded-xl shadow-xl">
+  <h1 class="custom-main-heading">Cast List</h1>
+
+  <div class="overflow-x-auto shadow-md rounded-lg border border-gray-200">
+    <table class="min-w-full divide-y divide-gray-200 bg-white rounded-xl">
+      <thead class="bg-indigo-600 text-white">
+        <tr>
+          <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Name</th>
+          <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Poster</th>
+          <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Role</th>
+          <th class="px-6 py-4 text-center text-sm font-semibold uppercase tracking-wider">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        <tr *ngFor="let cast of casts" class="hover:bg-indigo-50 transition">
+          <td class="px-6 py-4 font-medium text-indigo-900">{{ cast.name }}</td>
+          <td class="px-6 py-4">
+            <img *ngIf="cast.poster" [src]="cast.poster" alt="{{ cast.name }}" class="h-12 rounded shadow" />
+            <span *ngIf="!cast.poster" class="text-gray-400 italic">No poster</span>
+          </td>
+          <td class="px-6 py-4 text-gray-700 capitalize">{{ cast.role }}</td>
+          <td class="px-6 py-4 text-center">
+            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow transition"
+              (click)="deleteCast(cast.id!)">🗑</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Add Cast & Manage Contents Buttons -->
+  <div class="flex justify-start mt-6 gap-2">
+    <button class="custom-add-button" (click)="openAddPopup()">
+      ➕ Add Cast
+    </button>
+    <a routerLink="/content">
+      <button class="custom-add-button">
+            Manage Contents
+      </button>
+    </a>
+  </div>
+
+  <!-- Add Cast Popup -->
+  <ng-container *ngIf="isAddPopupOpen">
+    <div class="popup-backdrop">
+      <div class="popup">
+        <div class="popup-header">
+          <h3 class="text-2xl font-semibold text-green-600">➕ Add New Cast</h3>
+          <button (click)="closePopup()">✖</button>
+        </div>
+        <div class="popup-body">
+          <label>Name</label>
+          <input [(ngModel)]="newCastName" class="border border-gray-300 rounded px-3 py-2" />
+
+          <label>Poster URL</label>
+          <input [(ngModel)]="newCastPoster" class="border border-gray-300 rounded px-3 py-2" />
+
+          <label>Role</label>
+          <select [(ngModel)]="newCastRole" class="border border-gray-300 rounded px-3 py-2">
+            <option value="actor">Actor</option>
+            <option value="director">Director</option>
+          </select>
+
+          <div class="mt-4 flex justify-end gap-2">
+            <button class="bg-gray-400 text-white px-3 py-1 rounded" (click)="closePopup()">Cancel</button>
+            <button class="bg-green-700 text-white px-3 py-1 rounded" (click)="addCast()">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,19 @@
+# Derleme çıktısı
+/dist
+/.angular/cache
+/out-tsc
+
+# node_modules
+/node_modules
+
+# loglar
+npm-debug.log
+yarn-error.log
+
+# IDE klasörleri
+.vscode/
+.idea/
+
+# sistem dosyaları
+.DS_Store
+Thumbs.db
