@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "${contentUrl}")
+@RequestMapping("/content")
 public class ContentController {
     private final ContentService contentService;
     private final ImdbImportService imdbImportService;

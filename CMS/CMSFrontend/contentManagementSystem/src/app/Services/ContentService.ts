@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators'; // <-- Bunu ekle
   providedIn: 'root'
 })
 export class ContentService {
-  private apiUrl = 'http://localhost:8080/api/v1/content'; // Spring Boot API adresi
+  private apiUrl = 'http://localhost:8081/content'; // Spring Boot API adresi
   private apiUrlImdb = 'http://www.omdbapi.com/?apikey=b8a2b750&t='; // IMDb API adresi
 
   constructor(private http: HttpClient) {}
