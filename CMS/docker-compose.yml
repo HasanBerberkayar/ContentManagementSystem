@@ -36,11 +36,26 @@ services:
     ports:
       - "8081:8081"
     depends_on:
-      - discovery-server
       - backend
+      - auth-service
+      - discovery-server
+
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka
       SPRING_PROFILES_ACTIVE: docker  # varsa profillerini burada çalıştırabilirsin
+
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - auth-db
+      - discovery-server
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://auth-db:5432/authdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka
 
   db:
     image: postgres:15
@@ -53,5 +68,18 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
 
+  auth-db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: authdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"  # Dış port 5433, iç port yine 5432
+    volumes:
+      - auth_db_data:/var/lib/postgresql/data
+
 volumes:
   db_data:
+  auth_db_data:
