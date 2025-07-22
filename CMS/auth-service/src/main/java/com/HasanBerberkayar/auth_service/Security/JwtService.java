@@ -1,12 +1,16 @@
 package com.HasanBerberkayar.auth_service.Security;
 
-import io.jsonwebtoken.*;
+import com.HasanBerberkayar.auth_service.Model.User;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.HasanBerberkayar.auth_service.Model.User;
-
+import java.security.Key;
 import java.util.Date;
 
 @Service
@@ -18,6 +22,13 @@ public class JwtService {
     @Value("${jwt.expiration}")
     private long expirationTime;
 
+    private Key key;
+
+    @PostConstruct
+    public void init() {
+        this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
+    }
+
     public JwtService() {
     }
 
@@ -28,7 +39,7 @@ public class JwtService {
                 .claim("role", user.getRole())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .signWith(key)
                 .compact();
     }
 
@@ -50,7 +61,8 @@ public class JwtService {
     private Claims getClaims(String token) {
         try {
             return Jwts.parser()
-                    .setSigningKey(secretKey)
+                    .setSigningKey(key)
+                    .build()
                     .parseClaimsJws(token)
                     .getBody();
         } catch (JwtException | IllegalArgumentException e) {
