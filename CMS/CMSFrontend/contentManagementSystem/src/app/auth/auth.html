@@ -1,0 +1,27 @@
+<div class="auth-wrapper">
+  <div class="auth-container">
+    <h2 class="custom-main-heading">{{ isLoginMode ? 'Login' : 'Register' }}</h2>
+
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+      <label for="username">Username</label>
+      <input id="username" formControlName="username" type="text" />
+
+      <label for="password">Password</label>
+      <input id="password" formControlName="password" type="password" />
+
+      <button type="submit">{{ isLoginMode ? 'Login' : 'Register' }}</button>
+    </form>
+
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successMessage" class="alert alert-success mt-3">
+      {{ successMessage }}
+    </div>
+
+    <button class="toggle-button" (click)="toggleMode()">
+      {{ isLoginMode ? "Don't have an account? Register" : 'Already have an account? Login' }}
+    </button>
+  </div>
+</div>

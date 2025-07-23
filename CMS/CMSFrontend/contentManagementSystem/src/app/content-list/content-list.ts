@@ -10,7 +10,8 @@ import './content-list.css';
 import { lastValueFrom } from 'rxjs';
 import { CastRequest } from '../Models/CastRequest';
 import { Observable, forkJoin } from 'rxjs';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+import { AuthService } from '../Services/AuthService';
 
 @Component({
   selector: 'app-content-list',
@@ -41,7 +42,9 @@ export class ContentListComponent implements OnInit {
   constructor(private contentService: ContentService,
     private cdr: ChangeDetectorRef,
     private castsService: CastService,
-    private ngZone: NgZone) { }
+    private ngZone: NgZone,
+    private authService:
+      AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadContents();
@@ -65,7 +68,7 @@ export class ContentListComponent implements OnInit {
         });
       });
 
-      this.cdr.detectChanges(); 
+      this.cdr.detectChanges();
     });
   }
 
@@ -92,7 +95,7 @@ export class ContentListComponent implements OnInit {
   }
 
   openEditPopup(content: Content): void {
-    this.selectedContent = { ...content, metadata: { ...content.metadata } }; 
+    this.selectedContent = { ...content, metadata: { ...content.metadata } };
     this.selectedActors = [...(content.actors || [])];
     this.selectedActorIds = this.selectedActors.map(a => a.id!).filter((id): id is number => id !== undefined);
     this.selectedDirectorId = content.director && content.director.id !== undefined ? content.director.id : null;
@@ -250,19 +253,7 @@ export class ContentListComponent implements OnInit {
         castAddRequests.push(this.castsService.addCast(castRequest));
       });
 
-    forkJoin(castAddRequests).subscribe(newlyAddedCasts => {
-      newlyAddedCasts.forEach(cast => {
-        if (cast.role === 'director') {
-          this.selectedDirectorId = cast.id!;
-        } else {
-          const index = this.selectedActorIds.findIndex(id => id < 0);
-          if (index !== -1) {
-            this.selectedActorIds[index] = cast.id!;
-            this.selectedActors[index].id = cast.id!;
-          }
-        }
-      });
-
+    const handleContentSubmission = () => {
       const contentRequest = {
         metadata: this.newMetadata,
         directorId: this.selectedDirectorId,
@@ -290,14 +281,33 @@ export class ContentListComponent implements OnInit {
           this.cdr.detectChanges();
         });
       });
-    });
+    };
+
+    if (castAddRequests.length > 0) {
+      forkJoin(castAddRequests).subscribe(newlyAddedCasts => {
+        newlyAddedCasts.forEach(cast => {
+          if (cast.role === 'director') {
+            this.selectedDirectorId = cast.id!;
+          } else {
+            const index = this.selectedActorIds.findIndex(id => id < 0);
+            if (index !== -1) {
+              this.selectedActorIds[index] = cast.id!;
+              this.selectedActors[index].id = cast.id!;
+            }
+          }
+        });
+        handleContentSubmission();
+      });
+    } else {
+      handleContentSubmission();
+    }
   }
 
 
 
   isLoading = false;
 
-  private tempIdCounter = -1; 
+  private tempIdCounter = -1;
 
   generateTemporaryId(): number {
     return this.tempIdCounter--;
@@ -350,7 +360,7 @@ export class ContentListComponent implements OnInit {
       }
 
       this.isLoading = false;
-      this.cdr.detectChanges(); 
+      this.cdr.detectChanges();
 
     } catch (err) {
       this.isLoading = false;
@@ -358,5 +368,10 @@ export class ContentListComponent implements OnInit {
       console.error("IMDb data retrieval error:", err);
       alert("Could not retrieve data from imdb. Please try again.");
     }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/auth']);
   }
 }

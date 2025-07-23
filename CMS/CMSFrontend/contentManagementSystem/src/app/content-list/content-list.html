@@ -37,14 +37,16 @@
 
   <!-- Add & Manage Buttons -->
   <div class="flex justify-end mt-6 gap-2">
-    <button class="custom-add-button" (click)="openAddPopup()">
-      ➕ Add New Content
-    </button>
-
-    <a routerLink="/casts">
-      <button class="custom-add-button">Manage Casts</button>
-    </a>
-  </div>
+  <button class="custom-add-button" (click)="openAddPopup()">
+    Add New Content
+  </button>
+  <a routerLink="/casts">
+    <button class="custom-add-button">Manage Casts</button>
+  </a>
+  <button class="custom-add-button" (click)="logout()">
+    Logout
+  </button>
+</div>
 
   <!-- POPUPS -->
   <ng-container *ngIf="isAddPopupOpen || selectedContent || viewedContent">
@@ -123,7 +125,7 @@
             <div class="flex justify-end">
               <button (click)="selectedActorToAdd && addActor(selectedActorToAdd)" [disabled]="!selectedActorToAdd"
                 class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded shadow">
-                ➕ Add Actor
+                 Add Actor
               </button>
             </div>
 
