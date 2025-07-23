@@ -4,14 +4,14 @@ import { Observable } from 'rxjs';
 import { Content } from '../Models/Content';
 import { Casts } from '../Models/Casts';
 import { Metadata } from '../Models/Metadata';
-import { map } from 'rxjs/operators'; // <-- Bunu ekle
+import { map } from 'rxjs/operators'; 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContentService {
-  private apiUrl = 'http://localhost:8081/content'; // Spring Boot API adresi
-  private apiUrlImdb = 'http://www.omdbapi.com/?apikey=b8a2b750&t='; // IMDb API adresi
+  private apiUrl = 'http://localhost:8081/content'; 
+  private apiUrlImdb = 'http://www.omdbapi.com/?apikey=b8a2b750&t='; 
 
   constructor(private http: HttpClient) {}
 

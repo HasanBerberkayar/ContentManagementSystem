@@ -59,7 +59,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Şifreler için
+        return new BCryptPasswordEncoder();
     }
 
     @Bean

@@ -50,7 +50,6 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody AuthRequest request) {
         try {
-            // Bu satır otomatik olarak kullanıcıyı authenticate eder ve exception fırlatabilir
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
             );

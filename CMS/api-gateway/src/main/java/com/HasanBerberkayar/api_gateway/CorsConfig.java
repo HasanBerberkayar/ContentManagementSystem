@@ -14,12 +14,12 @@ public class CorsConfig {
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:4200"); // Angular portu
+        config.addAllowedOrigin("http://localhost:4200");
         config.addAllowedHeader("*");
-        config.addAllowedMethod("*"); // GET, POST, PUT, DELETE, vs.
+        config.addAllowedMethod("*");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config); // tüm endpoint'lere uygula
+        source.registerCorsConfiguration("/**", config); 
 
         return new CorsWebFilter(source);
     }

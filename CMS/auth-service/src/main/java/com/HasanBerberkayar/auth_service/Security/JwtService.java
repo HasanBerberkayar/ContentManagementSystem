@@ -43,12 +43,10 @@ public class JwtService {
                 .compact();
     }
 
-    // Token'dan kullanıcı adını al
     public String extractUsername(String token) {
         return getClaims(token).getSubject();
     }
 
-    // Token doğrulama
     public boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
@@ -66,7 +64,7 @@ public class JwtService {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (JwtException | IllegalArgumentException e) {
-            throw new RuntimeException("Geçersiz veya bozulmuş JWT token", e);
+            throw new RuntimeException("Invalid or expired JWT token", e);
         }
     }
 }

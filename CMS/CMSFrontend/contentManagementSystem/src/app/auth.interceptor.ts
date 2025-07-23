@@ -23,7 +23,6 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     if (token) {
-      // Yeni bir request oluştur, Authorization header ekle
       const authReq = req.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
@@ -32,7 +31,6 @@ export class AuthInterceptor implements HttpInterceptor {
       return next.handle(authReq);
     }
 
-    // Token yoksa orijinal request devam etsin
     return next.handle(req);
   }
 }

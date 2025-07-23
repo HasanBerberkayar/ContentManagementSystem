@@ -24,12 +24,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(usernameOrEmail)
-                .orElseThrow(() -> new UsernameNotFoundException("Kullanıcı bulunamadı: " + usernameOrEmail));
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found: " + usernameOrEmail));
 
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
-                Collections.emptyList() // Roller eklemek istersen burayı güncelleyebilirsin
+                Collections.emptyList()
         );
     }
 }

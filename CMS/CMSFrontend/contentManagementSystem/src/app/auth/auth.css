@@ -10,9 +10,9 @@
 .auth-container {
   background: #ffffff;
   border-radius: 1rem;
-  padding: 1.5rem 2rem; /* azaldı */
+  padding: 1.5rem 2rem; 
   width: 400px;
-  min-height: 450px; /* eklendi */
+  min-height: 450px; 
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   flex-direction: column;
@@ -41,10 +41,10 @@
 
 .auth-container input {
   width: 100%;
-  max-width: 350px; /* eklendi */
-  box-sizing: border-box; /* eklendi */
+  max-width: 350px; 
+  box-sizing: border-box; 
   padding: 0.75rem;
-  margin-top: 0.5rem; /* değişti */
+  margin-top: 0.5rem; 
   border: 1px solid #d1d5db;
   border-radius: 0.5rem;
   font-size: 1rem;
@@ -59,10 +59,10 @@
 }
 
 .auth-container button[type="submit"] {
-  margin-top: 1.5rem; /* değişti */
+  margin-top: 1.5rem; 
   width: 100%;
-  max-width: 350px; /* eklendi */
-  box-sizing: border-box; /* eklendi */
+  max-width: 350px; 
+  box-sizing: border-box; 
   padding: 0.75rem 1.5rem;
   background: #374151;
   color: white;

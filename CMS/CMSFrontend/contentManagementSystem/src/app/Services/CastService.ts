@@ -10,7 +10,7 @@ import { CastRequest } from '../Models/CastRequest';
 export class CastService {
   constructor(private http: HttpClient) {}
 
-  private apiUrl = 'http://localhost:8081/cast'; // Spring Boot API address
+  private apiUrl = 'http://localhost:8081/cast'; 
 
   // Method to get all casts
   getAllCasts(): Observable<Casts[]> {

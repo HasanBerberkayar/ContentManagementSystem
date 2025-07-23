@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth-guard';
 import { AuthComponent } from './auth/auth';
 
 export const routes: Routes = [
@@ -15,11 +16,13 @@ export const routes: Routes = [
   {
     path: 'content',
     loadComponent: () => import('./content-list/content-list')
-      .then(m => m.ContentListComponent)
+      .then(m => m.ContentListComponent),
+    canActivate: [AuthGuard]
   },
   {
     path: 'casts',
     loadComponent: () => import('./cast-list/cast-list')
-      .then(m => m.CastListComponent)
+      .then(m => m.CastListComponent),
+    canActivate: [AuthGuard]
   }
 ];
