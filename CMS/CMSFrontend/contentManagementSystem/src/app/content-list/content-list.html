@@ -7,6 +7,7 @@
     <table class="min-w-full divide-y divide-gray-200 bg-white rounded-xl">
       <thead class="bg-indigo-600 text-white">
         <tr>
+          <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Poster</th>
           <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Title</th>
           <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Plot</th>
           <th class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">Year</th>
@@ -17,18 +18,43 @@
       </thead>
       <tbody class="divide-y divide-gray-100">
         <tr *ngFor="let content of contents" class="hover:bg-indigo-50 transition">
-          <td class="px-6 py-4 font-medium text-indigo-900">{{ content.metadata.title }}</td>
-          <td class="px-6 py-4 text-gray-700 italic max-w-sm truncate">{{ content.metadata.plot }}</td>
-          <td class="px-6 py-4 text-gray-600">{{ content.metadata.year }}</td>
-          <td class="px-6 py-4 text-gray-600">{{ content.metadata.language }}</td>
-          <td class="px-6 py-4 text-gray-600">{{ content.metadata.country }}</td>
-          <td class="px-6 py-4 text-center space-x-2">
-            <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded shadow transition"
-              (click)="viewContent(content)">🔍</button>
-            <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded shadow transition"
-              (click)="openEditPopup(content)">✏️</button>
-            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow transition"
-              (click)="deleteContent(content.id!)">🗑</button>
+          <td class="px-6 py-4">
+            <img [src]="content.metadata.poster" alt="Poster" class="w-20 h-auto rounded shadow-md" />
+          </td>
+          <td class="px-6 py-4 text-center">
+            <div class="custom-title">
+              {{ (content.metadata.title || '').split(' ').join('\n') }}
+            </div>
+          </td>
+          <td class="px-6 py-4 text-center">
+            <div class="custom-font">
+              {{ content.metadata.plot  }}
+            </div>
+          </td>
+          <td class="px-6 py-4 text-center">
+            <div class="custom-font">
+              {{ content.metadata.year  }}
+            </div>
+          </td>
+          <td class="px-6 py-4 text-center">
+            <div class="language-country-list">
+              {{ (content.metadata.language || '').split(',').join(',\n') }}
+            </div>
+          </td>
+          <td class="px-6 py-4 text-center">
+            <div class="language-country-list">
+              {{ (content.metadata.country || '').split(',').join(',\n') }}
+            </div>
+          </td>
+          <td class="px-6 py-4 text-center">
+            <div class="vertical-button-group">
+              <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded shadow transition"
+                (click)="viewContent(content)">🔍</button>
+              <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded shadow transition"
+                (click)="openEditPopup(content)">✏️</button>
+              <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow transition"
+                (click)="deleteContent(content.id!)">🗑️</button>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -37,16 +63,12 @@
 
   <!-- Add & Manage Buttons -->
   <div class="flex justify-end mt-6 gap-2">
-  <button class="custom-add-button" (click)="openAddPopup()">
-    Add New Content
-  </button>
-  <a routerLink="/casts">
-    <button class="custom-add-button">Manage Casts</button>
-  </a>
-  <button class="custom-add-button" (click)="logout()">
-    Logout
-  </button>
-</div>
+    <button class="custom-add-button" (click)="openAddPopup()">Add New Content</button>
+    <a routerLink="/casts">
+      <button class="custom-add-button">Manage Casts</button>
+    </a>
+    <button class="custom-add-button" (click)="logout()">Logout</button>
+  </div>
 
   <!-- POPUPS -->
   <ng-container *ngIf="isAddPopupOpen || selectedContent || viewedContent">
@@ -60,6 +82,7 @@
             <button (click)="closePopup()">✖</button>
           </div>
           <div class="popup-body">
+            <img [src]="viewedContent.metadata.poster" alt="Poster" class="w-40 h-auto rounded shadow mb-4" />
             <p><strong>Plot:</strong> {{ viewedContent.metadata.plot }}</p>
             <p><strong>Year:</strong> {{ viewedContent.metadata.year }}</p>
             <p><strong>Language:</strong> {{ viewedContent.metadata.language }}</p>
@@ -125,7 +148,7 @@
             <div class="flex justify-end">
               <button (click)="selectedActorToAdd && addActor(selectedActorToAdd)" [disabled]="!selectedActorToAdd"
                 class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded shadow">
-                 Add Actor
+                Add Actor
               </button>
             </div>
 

@@ -154,6 +154,7 @@ export class ContentListComponent implements OnInit {
           params.directorId = this.selectedDirectorId;
         }
       }
+      //ÇOk fazla if bloğu var, bu yüzden daha temiz bir çözüm için bir fonksiyon yazabiliriz
       let newS: string = "";
       let oldS: string = "";
       for (const actor of this.selectedActors || []) {

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MetadataRepository extends JpaRepository<Metadata, Long> {
-
+ //Custom query örneği bak
 }
